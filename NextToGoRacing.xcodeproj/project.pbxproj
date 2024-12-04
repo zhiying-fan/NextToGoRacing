@@ -14,6 +14,7 @@
 		CEB86F552CFFF6C00066A619 /* NextToGoRacingTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = CEB86F542CFFF6C00066A619 /* NextToGoRacingTests.swift */; };
 		CEB86F5F2CFFF6C00066A619 /* NextToGoRacingUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = CEB86F5E2CFFF6C00066A619 /* NextToGoRacingUITests.swift */; };
 		CEB86F612CFFF6C00066A619 /* NextToGoRacingUITestsLaunchTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = CEB86F602CFFF6C00066A619 /* NextToGoRacingUITestsLaunchTests.swift */; };
+		CEB86F712CFFFFF80066A619 /* DesignKit in Frameworks */ = {isa = PBXBuildFile; productRef = CEB86F702CFFFFF80066A619 /* DesignKit */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -44,6 +45,7 @@
 		CEB86F5A2CFFF6C00066A619 /* NextToGoRacingUITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = NextToGoRacingUITests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		CEB86F5E2CFFF6C00066A619 /* NextToGoRacingUITests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NextToGoRacingUITests.swift; sourceTree = "<group>"; };
 		CEB86F602CFFF6C00066A619 /* NextToGoRacingUITestsLaunchTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NextToGoRacingUITestsLaunchTests.swift; sourceTree = "<group>"; };
+		CEB86F6E2CFFFF580066A619 /* DesignKit */ = {isa = PBXFileReference; lastKnownFileType = wrapper; path = DesignKit; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -51,6 +53,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				CEB86F712CFFFFF80066A619 /* DesignKit in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -74,10 +77,12 @@
 		CEB86F372CFFF6BF0066A619 = {
 			isa = PBXGroup;
 			children = (
+				CEB86F6E2CFFFF580066A619 /* DesignKit */,
 				CEB86F422CFFF6BF0066A619 /* NextToGoRacing */,
 				CEB86F532CFFF6C00066A619 /* NextToGoRacingTests */,
 				CEB86F5D2CFFF6C00066A619 /* NextToGoRacingUITests */,
 				CEB86F412CFFF6BF0066A619 /* Products */,
+				CEB86F6F2CFFFFF80066A619 /* Frameworks */,
 			);
 			sourceTree = "<group>";
 		};
@@ -127,6 +132,13 @@
 			path = NextToGoRacingUITests;
 			sourceTree = "<group>";
 		};
+		CEB86F6F2CFFFFF80066A619 /* Frameworks */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			name = Frameworks;
+			sourceTree = "<group>";
+		};
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
@@ -144,6 +156,9 @@
 			dependencies = (
 			);
 			name = NextToGoRacing;
+			packageProductDependencies = (
+				CEB86F702CFFFFF80066A619 /* DesignKit */,
+			);
 			productName = NextToGoRacing;
 			productReference = CEB86F402CFFF6BF0066A619 /* NextToGoRacing.app */;
 			productType = "com.apple.product-type.application";
@@ -613,6 +628,13 @@
 			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
+
+/* Begin XCSwiftPackageProductDependency section */
+		CEB86F702CFFFFF80066A619 /* DesignKit */ = {
+			isa = XCSwiftPackageProductDependency;
+			productName = DesignKit;
+		};
+/* End XCSwiftPackageProductDependency section */
 	};
 	rootObject = CEB86F382CFFF6BF0066A619 /* Project object */;
 }
