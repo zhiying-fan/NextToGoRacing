@@ -7,11 +7,20 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		CE8FA0C22D00513A00958550 /* HTTPClient.swift in Sources */ = {isa = PBXBuildFile; fileRef = CE8FA0C12D00513A00958550 /* HTTPClient.swift */; };
+		CE8FA0C42D00523A00958550 /* RequestError.swift in Sources */ = {isa = PBXBuildFile; fileRef = CE8FA0C32D00523A00958550 /* RequestError.swift */; };
+		CE8FA0C62D0056F900958550 /* RacingService.swift in Sources */ = {isa = PBXBuildFile; fileRef = CE8FA0C52D0056F900958550 /* RacingService.swift */; };
+		CE8FA0C82D0058C500958550 /* APIResponse.swift in Sources */ = {isa = PBXBuildFile; fileRef = CE8FA0C72D0058C500958550 /* APIResponse.swift */; };
+		CE8FA0CB2D0059A400958550 /* RacesDTO.swift in Sources */ = {isa = PBXBuildFile; fileRef = CE8FA0CA2D0059A400958550 /* RacesDTO.swift */; };
+		CE8FA0CD2D005A1A00958550 /* RaceSummary.swift in Sources */ = {isa = PBXBuildFile; fileRef = CE8FA0CC2D005A1A00958550 /* RaceSummary.swift */; };
+		CE8FA0CF2D005B1000958550 /* AdvertisedStart.swift in Sources */ = {isa = PBXBuildFile; fileRef = CE8FA0CE2D005B1000958550 /* AdvertisedStart.swift */; };
+		CE8FA0D12D005CF400958550 /* RacingServiceTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = CE8FA0D02D005CF400958550 /* RacingServiceTests.swift */; };
+		CE8FA0D32D006EEC00958550 /* HTTPAPI.swift in Sources */ = {isa = PBXBuildFile; fileRef = CE8FA0D22D006EEC00958550 /* HTTPAPI.swift */; };
+		CE8FA0D52D006F9600958550 /* HTTPClientTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = CE8FA0D42D006F9600958550 /* HTTPClientTests.swift */; };
 		CEB86F442CFFF6BF0066A619 /* NextToGoRacingApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = CEB86F432CFFF6BF0066A619 /* NextToGoRacingApp.swift */; };
 		CEB86F462CFFF6BF0066A619 /* ContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = CEB86F452CFFF6BF0066A619 /* ContentView.swift */; };
 		CEB86F482CFFF6C00066A619 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = CEB86F472CFFF6C00066A619 /* Assets.xcassets */; };
 		CEB86F4B2CFFF6C00066A619 /* Preview Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = CEB86F4A2CFFF6C00066A619 /* Preview Assets.xcassets */; };
-		CEB86F552CFFF6C00066A619 /* NextToGoRacingTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = CEB86F542CFFF6C00066A619 /* NextToGoRacingTests.swift */; };
 		CEB86F5F2CFFF6C00066A619 /* NextToGoRacingUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = CEB86F5E2CFFF6C00066A619 /* NextToGoRacingUITests.swift */; };
 		CEB86F612CFFF6C00066A619 /* NextToGoRacingUITestsLaunchTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = CEB86F602CFFF6C00066A619 /* NextToGoRacingUITestsLaunchTests.swift */; };
 		CEB86F712CFFFFF80066A619 /* DesignKit in Frameworks */ = {isa = PBXBuildFile; productRef = CEB86F702CFFFFF80066A619 /* DesignKit */; };
@@ -35,13 +44,22 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		CE8FA0C12D00513A00958550 /* HTTPClient.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HTTPClient.swift; sourceTree = "<group>"; };
+		CE8FA0C32D00523A00958550 /* RequestError.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RequestError.swift; sourceTree = "<group>"; };
+		CE8FA0C52D0056F900958550 /* RacingService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RacingService.swift; sourceTree = "<group>"; };
+		CE8FA0C72D0058C500958550 /* APIResponse.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = APIResponse.swift; sourceTree = "<group>"; };
+		CE8FA0CA2D0059A400958550 /* RacesDTO.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RacesDTO.swift; sourceTree = "<group>"; };
+		CE8FA0CC2D005A1A00958550 /* RaceSummary.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RaceSummary.swift; sourceTree = "<group>"; };
+		CE8FA0CE2D005B1000958550 /* AdvertisedStart.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AdvertisedStart.swift; sourceTree = "<group>"; };
+		CE8FA0D02D005CF400958550 /* RacingServiceTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RacingServiceTests.swift; sourceTree = "<group>"; };
+		CE8FA0D22D006EEC00958550 /* HTTPAPI.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HTTPAPI.swift; sourceTree = "<group>"; };
+		CE8FA0D42D006F9600958550 /* HTTPClientTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HTTPClientTests.swift; sourceTree = "<group>"; };
 		CEB86F402CFFF6BF0066A619 /* NextToGoRacing.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = NextToGoRacing.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		CEB86F432CFFF6BF0066A619 /* NextToGoRacingApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NextToGoRacingApp.swift; sourceTree = "<group>"; };
 		CEB86F452CFFF6BF0066A619 /* ContentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContentView.swift; sourceTree = "<group>"; };
 		CEB86F472CFFF6C00066A619 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		CEB86F4A2CFFF6C00066A619 /* Preview Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = "Preview Assets.xcassets"; sourceTree = "<group>"; };
 		CEB86F502CFFF6C00066A619 /* NextToGoRacingTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = NextToGoRacingTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
-		CEB86F542CFFF6C00066A619 /* NextToGoRacingTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NextToGoRacingTests.swift; sourceTree = "<group>"; };
 		CEB86F5A2CFFF6C00066A619 /* NextToGoRacingUITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = NextToGoRacingUITests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		CEB86F5E2CFFF6C00066A619 /* NextToGoRacingUITests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NextToGoRacingUITests.swift; sourceTree = "<group>"; };
 		CEB86F602CFFF6C00066A619 /* NextToGoRacingUITestsLaunchTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NextToGoRacingUITestsLaunchTests.swift; sourceTree = "<group>"; };
@@ -74,6 +92,27 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		CE8FA0BC2D004B1E00958550 /* Network */ = {
+			isa = PBXGroup;
+			children = (
+				CE8FA0D22D006EEC00958550 /* HTTPAPI.swift */,
+				CE8FA0C12D00513A00958550 /* HTTPClient.swift */,
+				CE8FA0C32D00523A00958550 /* RequestError.swift */,
+				CE8FA0C72D0058C500958550 /* APIResponse.swift */,
+			);
+			path = Network;
+			sourceTree = "<group>";
+		};
+		CE8FA0C92D00598500958550 /* Models */ = {
+			isa = PBXGroup;
+			children = (
+				CE8FA0CA2D0059A400958550 /* RacesDTO.swift */,
+				CE8FA0CC2D005A1A00958550 /* RaceSummary.swift */,
+				CE8FA0CE2D005B1000958550 /* AdvertisedStart.swift */,
+			);
+			path = Models;
+			sourceTree = "<group>";
+		};
 		CEB86F372CFFF6BF0066A619 = {
 			isa = PBXGroup;
 			children = (
@@ -99,7 +138,10 @@
 		CEB86F422CFFF6BF0066A619 /* NextToGoRacing */ = {
 			isa = PBXGroup;
 			children = (
+				CE8FA0BC2D004B1E00958550 /* Network */,
+				CE8FA0C92D00598500958550 /* Models */,
 				CEB86F432CFFF6BF0066A619 /* NextToGoRacingApp.swift */,
+				CE8FA0C52D0056F900958550 /* RacingService.swift */,
 				CEB86F452CFFF6BF0066A619 /* ContentView.swift */,
 				CEB86F472CFFF6C00066A619 /* Assets.xcassets */,
 				CEB86F492CFFF6C00066A619 /* Preview Content */,
@@ -118,7 +160,8 @@
 		CEB86F532CFFF6C00066A619 /* NextToGoRacingTests */ = {
 			isa = PBXGroup;
 			children = (
-				CEB86F542CFFF6C00066A619 /* NextToGoRacingTests.swift */,
+				CE8FA0D42D006F9600958550 /* HTTPClientTests.swift */,
+				CE8FA0D02D005CF400958550 /* RacingServiceTests.swift */,
 			);
 			path = NextToGoRacingTests;
 			sourceTree = "<group>";
@@ -295,8 +338,16 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				CE8FA0C42D00523A00958550 /* RequestError.swift in Sources */,
 				CEB86F462CFFF6BF0066A619 /* ContentView.swift in Sources */,
 				CEB86F442CFFF6BF0066A619 /* NextToGoRacingApp.swift in Sources */,
+				CE8FA0C22D00513A00958550 /* HTTPClient.swift in Sources */,
+				CE8FA0CF2D005B1000958550 /* AdvertisedStart.swift in Sources */,
+				CE8FA0C62D0056F900958550 /* RacingService.swift in Sources */,
+				CE8FA0D32D006EEC00958550 /* HTTPAPI.swift in Sources */,
+				CE8FA0CD2D005A1A00958550 /* RaceSummary.swift in Sources */,
+				CE8FA0C82D0058C500958550 /* APIResponse.swift in Sources */,
+				CE8FA0CB2D0059A400958550 /* RacesDTO.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -304,7 +355,8 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				CEB86F552CFFF6C00066A619 /* NextToGoRacingTests.swift in Sources */,
+				CE8FA0D12D005CF400958550 /* RacingServiceTests.swift in Sources */,
+				CE8FA0D52D006F9600958550 /* HTTPClientTests.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
