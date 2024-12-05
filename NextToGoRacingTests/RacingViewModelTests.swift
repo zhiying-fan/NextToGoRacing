@@ -6,6 +6,7 @@
 //
 
 import Combine
+import Foundation
 @testable import NextToGoRacing
 import XCTest
 
@@ -100,9 +101,20 @@ final class RacingViewModelTests: XCTestCase {
 
     func testFilterByCategory_whenHorseIsNotSelected_shouldNotReturnHorseRaces() {
         // Given
-        let viewModel = RacingViewModel()
-        viewModel.filteredRacesInOrder = [RacingServiceRequestSuccessfullyStub.raceOne, RacingServiceRequestSuccessfullyStub.raceTwo]
+        let racingServiceStub = RacingServiceRequestSuccessfullyStub()
+        let viewModel = RacingViewModel(racingService: racingServiceStub)
         let expectedRaces = [RacingServiceRequestSuccessfullyStub.raceTwo]
+        let expectation = XCTestExpectation(description: "Set state to finish")
+
+        viewModel.$loadState
+            .drop { $0 == .idle || $0 == .loading }
+            .sink { _ in
+                expectation.fulfill()
+            }
+            .store(in: &cancellableSet)
+
+        viewModel.fetchRacesPeriodically()
+        wait(for: [expectation], timeout: 1.5)
 
         // When
         if let index = viewModel.categories.firstIndex(where: { $0.category == .horse }) {
@@ -111,6 +123,27 @@ final class RacingViewModelTests: XCTestCase {
 
         // Then
         XCTAssertEqual(viewModel.filteredRacesInOrder, expectedRaces)
+    }
+
+    func testTakeTheFirstFive_whenThereAreMoreThanFiveRaces_shouldOnlyTakeTheFirstFive() {
+        // Given
+        let racingServiceStub = RacingServiceResponseSixRacesStub()
+        let viewModel = RacingViewModel(racingService: racingServiceStub)
+        let expectation = XCTestExpectation(description: "Set state to finish")
+
+        viewModel.$loadState
+            .drop { $0 == .idle || $0 == .loading }
+            .sink { _ in
+                expectation.fulfill()
+            }
+            .store(in: &cancellableSet)
+
+        // When
+        viewModel.fetchRacesPeriodically()
+
+        // Then
+        wait(for: [expectation], timeout: 1.5)
+        XCTAssertEqual(viewModel.filteredRacesInOrder.count, 5)
     }
 }
 
@@ -139,6 +172,23 @@ final class RacingServiceRequestSuccessfullyStub: RacingService {
             raceSummaries: [
                 "6cb1e96c-acf1-471f-b5bd-0947692b90cc": RacingServiceRequestSuccessfullyStub.raceTwo,
                 "e2e041dc-53f4-40c5-975d-4baf775e13a0": RacingServiceRequestSuccessfullyStub.raceOne,
+            ]
+        )
+        return dummyRacesDTO
+    }
+}
+
+final class RacingServiceResponseSixRacesStub: RacingService {
+    func fetchRaces() async throws -> RacesDTO {
+        let dummyRacesDTO = RacesDTO(
+            nextToGoIDS: Array(repeating: "e2e041dc-53f4-40c5-975d-4baf775e13a0", count: 6),
+            raceSummaries: [
+                "6cb1e96c-acf1-471f-b5bd-0947692b90cc": RacingServiceRequestSuccessfullyStub.raceTwo,
+                "e2e041dc-53f4-40c5-975d-4baf775e13a0": RacingServiceRequestSuccessfullyStub.raceOne,
+                "d2e041dc-53f4-40c5-975d-4baf775e13a0": RacingServiceRequestSuccessfullyStub.raceOne,
+                "a2e041dc-53f4-40c5-975d-4baf775e13a0": RacingServiceRequestSuccessfullyStub.raceOne,
+                "b2e041dc-53f4-40c5-975d-4baf775e13a0": RacingServiceRequestSuccessfullyStub.raceOne,
+                "f2e041dc-53f4-40c5-975d-4baf775e13a0": RacingServiceRequestSuccessfullyStub.raceOne,
             ]
         )
         return dummyRacesDTO

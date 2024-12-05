@@ -23,12 +23,14 @@ final class RacingViewModel: ObservableObject {
     @Published var categories = RaceCategory.allCases.map { CategorySelection(category: $0, selected: true) } {
         didSet {
             filterRaces()
+            takeTheFirstFiveRaces()
         }
     }
 
     private let racingService: RacingService
     private let timerPublisher = Timer.publish(every: 1, on: .main, in: .common)
     private var cancellableSet: Set<AnyCancellable> = []
+    private var allRaces = [RaceSummary]()
 
     init(racingService: RacingService = RemoteRacingService()) {
         self.racingService = racingService
@@ -50,9 +52,10 @@ final class RacingViewModel: ObservableObject {
         Task { @MainActor in
             do {
                 let racesDTO = try await racingService.fetchRaces()
-                filteredRacesInOrder = transformToOrderRaces(racesDTO: racesDTO)
+                allRaces = transformToOrderedRaces(racesDTO: racesDTO)
 
                 filterRaces()
+                takeTheFirstFiveRaces()
 
                 loadState = .finish
             } catch {
@@ -73,7 +76,7 @@ final class RacingViewModel: ObservableObject {
             .store(in: &cancellableSet)
     }
 
-    private func transformToOrderRaces(racesDTO: RacesDTO) -> [RaceSummary] {
+    private func transformToOrderedRaces(racesDTO: RacesDTO) -> [RaceSummary] {
         racesDTO.raceSummaries.values.sorted { $0.advertisedStart.seconds < $1.advertisedStart.seconds }
     }
 
@@ -82,6 +85,12 @@ final class RacingViewModel: ObservableObject {
             .filter(\.selected)
             .map(\.category)
 
-        filteredRacesInOrder = filteredRacesInOrder.filter { selectedCategories.contains($0.category) }
+        filteredRacesInOrder = allRaces
+            .filter { selectedCategories.contains($0.category) }
+    }
+
+    private func takeTheFirstFiveRaces() {
+        let sliceFive = filteredRacesInOrder.prefix(5)
+        filteredRacesInOrder = Array(sliceFive)
     }
 }
