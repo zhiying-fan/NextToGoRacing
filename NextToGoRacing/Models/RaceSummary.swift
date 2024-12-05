@@ -7,7 +7,7 @@
 
 import Foundation
 
-struct RaceSummary: Decodable {
+struct RaceSummary: Decodable, Equatable {
     let raceID: String
     let raceNumber: Int
     let meetingName: String

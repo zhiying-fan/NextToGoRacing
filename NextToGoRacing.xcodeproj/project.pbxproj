@@ -17,6 +17,8 @@
 		CE8FA0D12D005CF400958550 /* RacingServiceTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = CE8FA0D02D005CF400958550 /* RacingServiceTests.swift */; };
 		CE8FA0D32D006EEC00958550 /* HTTPAPI.swift in Sources */ = {isa = PBXBuildFile; fileRef = CE8FA0D22D006EEC00958550 /* HTTPAPI.swift */; };
 		CE8FA0D52D006F9600958550 /* HTTPClientTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = CE8FA0D42D006F9600958550 /* HTTPClientTests.swift */; };
+		CE8FA0D72D007B4A00958550 /* RacingViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = CE8FA0D62D007B4A00958550 /* RacingViewModel.swift */; };
+		CE8FA0D92D011EB900958550 /* RacingViewModelTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = CE8FA0D82D011EB900958550 /* RacingViewModelTests.swift */; };
 		CEB86F442CFFF6BF0066A619 /* NextToGoRacingApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = CEB86F432CFFF6BF0066A619 /* NextToGoRacingApp.swift */; };
 		CEB86F462CFFF6BF0066A619 /* ContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = CEB86F452CFFF6BF0066A619 /* ContentView.swift */; };
 		CEB86F482CFFF6C00066A619 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = CEB86F472CFFF6C00066A619 /* Assets.xcassets */; };
@@ -54,6 +56,8 @@
 		CE8FA0D02D005CF400958550 /* RacingServiceTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RacingServiceTests.swift; sourceTree = "<group>"; };
 		CE8FA0D22D006EEC00958550 /* HTTPAPI.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HTTPAPI.swift; sourceTree = "<group>"; };
 		CE8FA0D42D006F9600958550 /* HTTPClientTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HTTPClientTests.swift; sourceTree = "<group>"; };
+		CE8FA0D62D007B4A00958550 /* RacingViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RacingViewModel.swift; sourceTree = "<group>"; };
+		CE8FA0D82D011EB900958550 /* RacingViewModelTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RacingViewModelTests.swift; sourceTree = "<group>"; };
 		CEB86F402CFFF6BF0066A619 /* NextToGoRacing.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = NextToGoRacing.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		CEB86F432CFFF6BF0066A619 /* NextToGoRacingApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NextToGoRacingApp.swift; sourceTree = "<group>"; };
 		CEB86F452CFFF6BF0066A619 /* ContentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContentView.swift; sourceTree = "<group>"; };
@@ -142,6 +146,7 @@
 				CE8FA0C92D00598500958550 /* Models */,
 				CEB86F432CFFF6BF0066A619 /* NextToGoRacingApp.swift */,
 				CE8FA0C52D0056F900958550 /* RacingService.swift */,
+				CE8FA0D62D007B4A00958550 /* RacingViewModel.swift */,
 				CEB86F452CFFF6BF0066A619 /* ContentView.swift */,
 				CEB86F472CFFF6C00066A619 /* Assets.xcassets */,
 				CEB86F492CFFF6C00066A619 /* Preview Content */,
@@ -162,6 +167,7 @@
 			children = (
 				CE8FA0D42D006F9600958550 /* HTTPClientTests.swift */,
 				CE8FA0D02D005CF400958550 /* RacingServiceTests.swift */,
+				CE8FA0D82D011EB900958550 /* RacingViewModelTests.swift */,
 			);
 			path = NextToGoRacingTests;
 			sourceTree = "<group>";
@@ -342,6 +348,7 @@
 				CEB86F462CFFF6BF0066A619 /* ContentView.swift in Sources */,
 				CEB86F442CFFF6BF0066A619 /* NextToGoRacingApp.swift in Sources */,
 				CE8FA0C22D00513A00958550 /* HTTPClient.swift in Sources */,
+				CE8FA0D72D007B4A00958550 /* RacingViewModel.swift in Sources */,
 				CE8FA0CF2D005B1000958550 /* AdvertisedStart.swift in Sources */,
 				CE8FA0C62D0056F900958550 /* RacingService.swift in Sources */,
 				CE8FA0D32D006EEC00958550 /* HTTPAPI.swift in Sources */,
@@ -355,6 +362,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				CE8FA0D92D011EB900958550 /* RacingViewModelTests.swift in Sources */,
 				CE8FA0D12D005CF400958550 /* RacingServiceTests.swift in Sources */,
 				CE8FA0D52D006F9600958550 /* HTTPClientTests.swift in Sources */,
 			);
