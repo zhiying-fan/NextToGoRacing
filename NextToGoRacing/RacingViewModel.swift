@@ -28,7 +28,7 @@ final class RacingViewModel: ObservableObject {
     }
 
     private let racingService: RacingService
-    private let timerPublisher = Timer.publish(every: 1, on: .main, in: .common)
+    private let timerPublisher = Timer.publish(every: 60, on: .main, in: .common)
     private var cancellableSet: Set<AnyCancellable> = []
     private var allRaces = [RaceSummary]()
 
@@ -70,6 +70,7 @@ final class RacingViewModel: ObservableObject {
 
     private func subscribeTimer() {
         timerPublisher
+            .prepend(Date())
             .sink { [weak self] _ in
                 self?.fetchRaces()
             }

@@ -11,7 +11,7 @@ import SwiftUI
 struct NextToGoRacingApp: App {
     var body: some Scene {
         WindowGroup {
-            ContentView()
+            RacingView()
         }
     }
 }
