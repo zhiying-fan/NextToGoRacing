@@ -11,14 +11,14 @@ struct RaceSummary: Decodable, Equatable {
     let raceID: String
     let raceNumber: Int
     let meetingName: String
-    let categoryID: String
+    let category: RaceCategory
     let advertisedStart: AdvertisedStart
 
     enum CodingKeys: String, CodingKey {
         case raceID = "race_id"
         case raceNumber = "race_number"
         case meetingName = "meeting_name"
-        case categoryID = "category_id"
+        case category = "category_id"
         case advertisedStart = "advertised_start"
     }
 }

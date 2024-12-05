@@ -19,7 +19,12 @@ enum LoadState: Equatable {
 
 final class RacingViewModel: ObservableObject {
     @Published var loadState = LoadState.idle
-    @Published var orderedRaces = [RaceSummary]()
+    @Published var filteredRacesInOrder = [RaceSummary]()
+    @Published var categories = RaceCategory.allCases.map { CategorySelection(category: $0, selected: true) } {
+        didSet {
+            filterRaces()
+        }
+    }
 
     private let racingService: RacingService
     private let timerPublisher = Timer.publish(every: 1, on: .main, in: .common)
@@ -39,11 +44,15 @@ final class RacingViewModel: ObservableObject {
             .store(in: &cancellableSet)
     }
 
+    // MARK: Private Methods
+
     private func fetchRaces() {
         Task { @MainActor in
             do {
                 let racesDTO = try await racingService.fetchRaces()
-                orderedRaces = transformToOrderRaces(racesDTO: racesDTO)
+                filteredRacesInOrder = transformToOrderRaces(racesDTO: racesDTO)
+
+                filterRaces()
 
                 loadState = .finish
             } catch {
@@ -66,5 +75,13 @@ final class RacingViewModel: ObservableObject {
 
     private func transformToOrderRaces(racesDTO: RacesDTO) -> [RaceSummary] {
         racesDTO.raceSummaries.values.sorted { $0.advertisedStart.seconds < $1.advertisedStart.seconds }
+    }
+
+    private func filterRaces() {
+        let selectedCategories = categories
+            .filter(\.selected)
+            .map(\.category)
+
+        filteredRacesInOrder = filteredRacesInOrder.filter { selectedCategories.contains($0.category) }
     }
 }

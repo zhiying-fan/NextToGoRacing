@@ -19,6 +19,7 @@
 		CE8FA0D52D006F9600958550 /* HTTPClientTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = CE8FA0D42D006F9600958550 /* HTTPClientTests.swift */; };
 		CE8FA0D72D007B4A00958550 /* RacingViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = CE8FA0D62D007B4A00958550 /* RacingViewModel.swift */; };
 		CE8FA0D92D011EB900958550 /* RacingViewModelTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = CE8FA0D82D011EB900958550 /* RacingViewModelTests.swift */; };
+		CE8FA0DB2D0152F000958550 /* CategorySelection.swift in Sources */ = {isa = PBXBuildFile; fileRef = CE8FA0DA2D0152F000958550 /* CategorySelection.swift */; };
 		CEB86F442CFFF6BF0066A619 /* NextToGoRacingApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = CEB86F432CFFF6BF0066A619 /* NextToGoRacingApp.swift */; };
 		CEB86F462CFFF6BF0066A619 /* ContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = CEB86F452CFFF6BF0066A619 /* ContentView.swift */; };
 		CEB86F482CFFF6C00066A619 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = CEB86F472CFFF6C00066A619 /* Assets.xcassets */; };
@@ -58,6 +59,7 @@
 		CE8FA0D42D006F9600958550 /* HTTPClientTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HTTPClientTests.swift; sourceTree = "<group>"; };
 		CE8FA0D62D007B4A00958550 /* RacingViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RacingViewModel.swift; sourceTree = "<group>"; };
 		CE8FA0D82D011EB900958550 /* RacingViewModelTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RacingViewModelTests.swift; sourceTree = "<group>"; };
+		CE8FA0DA2D0152F000958550 /* CategorySelection.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CategorySelection.swift; sourceTree = "<group>"; };
 		CEB86F402CFFF6BF0066A619 /* NextToGoRacing.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = NextToGoRacing.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		CEB86F432CFFF6BF0066A619 /* NextToGoRacingApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NextToGoRacingApp.swift; sourceTree = "<group>"; };
 		CEB86F452CFFF6BF0066A619 /* ContentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContentView.swift; sourceTree = "<group>"; };
@@ -113,6 +115,7 @@
 				CE8FA0CA2D0059A400958550 /* RacesDTO.swift */,
 				CE8FA0CC2D005A1A00958550 /* RaceSummary.swift */,
 				CE8FA0CE2D005B1000958550 /* AdvertisedStart.swift */,
+				CE8FA0DA2D0152F000958550 /* CategorySelection.swift */,
 			);
 			path = Models;
 			sourceTree = "<group>";
@@ -354,6 +357,7 @@
 				CE8FA0D32D006EEC00958550 /* HTTPAPI.swift in Sources */,
 				CE8FA0CD2D005A1A00958550 /* RaceSummary.swift in Sources */,
 				CE8FA0C82D0058C500958550 /* APIResponse.swift in Sources */,
+				CE8FA0DB2D0152F000958550 /* CategorySelection.swift in Sources */,
 				CE8FA0CB2D0059A400958550 /* RacesDTO.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
