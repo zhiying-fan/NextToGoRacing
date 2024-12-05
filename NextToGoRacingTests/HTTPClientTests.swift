@@ -9,57 +9,66 @@
 import XCTest
 
 final class HTTPClientTests: XCTestCase {
-    func testGetRequestShouldThrowInvalidURLWhenPassEmpty() async {
+    func testGetRequest_whenPassEmptyURL_shouldThrowInvalidURL() async {
+        // Given
         let httpAPIStub = HTTPAPIRequestSuccessfullyStub()
         let httpClient = DefaultHTTPClient(httpAPI: httpAPIStub)
-
         var thrownError: Error?
 
+        // When
         do {
             _ = try await httpClient.getRequest(url: "")
         } catch {
             thrownError = error
         }
 
+        // Then
         XCTAssertEqual(thrownError as? RequestError, RequestError.invalidURL)
     }
 
-    func testGetRequestShouldThrowNoInternetWhenRequestReturn1003Error() async {
+    func testGetRequest_whenAPIReturn1003Error_shouldThrowNoInternet() async {
+        // Given
         let httpAPIStub = HTTPAPINoInternetStub()
         let httpClient = DefaultHTTPClient(httpAPI: httpAPIStub)
-
         var thrownError: Error?
 
+        // When
         do {
             _ = try await httpClient.getRequest(url: "https://abc.com")
         } catch {
             thrownError = error
         }
 
+        // Then
         XCTAssertEqual(thrownError as? RequestError, RequestError.noInternet)
     }
 
-    func testGetRequestShouldThrowInvalidResponseWhenRequestReturn401() async {
+    func testGetRequest_whenAPIReturn401_shouldThrowInvalidResponse() async {
+        // Given
         let httpAPIStub = HTTPAPIInvalidResponseStub()
         let httpClient = DefaultHTTPClient(httpAPI: httpAPIStub)
-
         var thrownError: Error?
 
+        // When
         do {
             _ = try await httpClient.getRequest(url: "https://abc.com")
         } catch {
             thrownError = error
         }
 
+        // Then
         XCTAssertEqual(thrownError as? RequestError, RequestError.invalidResponse)
     }
 
-    func testGetRequestShouldReturnDataWhenThereIsNoError() async {
+    func testGetRequest_whenThereIsNoError_shouldReturnData() async {
+        // Given
         let httpAPIStub = HTTPAPIRequestSuccessfullyStub()
         let httpClient = DefaultHTTPClient(httpAPI: httpAPIStub)
 
+        // When
         let data = try? await httpClient.getRequest(url: "https://abc.com")
 
+        // Then
         XCTAssertEqual(data, Data())
     }
 }

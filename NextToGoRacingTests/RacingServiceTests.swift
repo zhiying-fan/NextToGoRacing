@@ -9,42 +9,49 @@
 import XCTest
 
 final class RacingServiceTests: XCTestCase {
-    func testFetchRacesShouldReturnRacesDTOWhenCorrectDataFromClient() async {
+    func testFetchRaces_whenGetDataFromClient_shouldReturnRacesDTO() async {
+        // Given
         let correctDataClientStub = HTTPClientReturnRacesDTODataStub()
         let racingService = RemoteRacingService(httpClient: correctDataClientStub)
 
+        // When
         let racesDTO = try? await racingService.fetchRaces()
 
+        // Then
         XCTAssertNotNil(racesDTO)
     }
 
-    func testFetchRacesShouldThrowWhenWrongDataFromClient() async {
+    func testFetchRaces_whenGetWrongDataFromClient_shouldThrow() async {
+        // Given
         let wrongDataClientStub = HTTPClientReturnWrongDataStub()
         let racingService = RemoteRacingService(httpClient: wrongDataClientStub)
-
         var thrownError: Error?
 
+        // When
         do {
             _ = try await racingService.fetchRaces()
         } catch {
             thrownError = error
         }
 
+        // Then
         XCTAssertNotNil(thrownError)
     }
 
-    func testFetchRacesShouldThrowWhenThereIsAnErrorFromClient() async {
+    func testFetchRaces_whenThereIsAnErrorFromClient_shouldThrow() async {
+        // Given
         let errorClientStub = HTTPClientGetFailedStub()
         let racingService = RemoteRacingService(httpClient: errorClientStub)
-
         var thrownError: Error?
 
+        // When
         do {
             _ = try await racingService.fetchRaces()
         } catch {
             thrownError = error
         }
 
+        // Then
         XCTAssertNotNil(thrownError)
     }
 }

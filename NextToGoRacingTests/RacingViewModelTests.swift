@@ -10,7 +10,7 @@ import Combine
 import XCTest
 
 final class RacingViewModelTests: XCTestCase {
-    var viewModel: RacingViewModel!
+    private var viewModel: RacingViewModel!
     private var cancellableSet: Set<AnyCancellable> = []
 
     override func tearDown() {
@@ -18,16 +18,20 @@ final class RacingViewModelTests: XCTestCase {
         viewModel = nil
     }
 
-    func testInitShouldHaveIdleStateAndEmptyRaces() {
+    func testViewModel_whenInit_shouldHaveIdleStateAndEmptyRaces() {
+        // Given
         let racingServiceStub = RacingServiceRequestSuccessfullyStub()
 
+        // When
         let viewModel = RacingViewModel(racingService: racingServiceStub)
 
+        // Then
         XCTAssertEqual(viewModel.loadState, LoadState.idle)
         XCTAssertEqual(viewModel.filteredRacesInOrder.count, 0)
     }
 
-    func testFetchPeriodicallyShouldSetStateAndRacesWhenRequestSuccessfully() {
+    func testFetchPeriodically_whenRequestSuccessfully_shouldSetStateAndRaces() {
+        // Given
         let racingServiceStub = RacingServiceRequestSuccessfullyStub()
         let viewModel = RacingViewModel(racingService: racingServiceStub)
         let expectedRaces = [RacingServiceRequestSuccessfullyStub.raceOne, RacingServiceRequestSuccessfullyStub.raceTwo]
@@ -35,69 +39,77 @@ final class RacingViewModelTests: XCTestCase {
 
         viewModel.$loadState
             .drop { $0 == .idle || $0 == .loading }
-            .sink {
-                XCTAssertEqual($0, .finish)
-                XCTAssertEqual(viewModel.filteredRacesInOrder, expectedRaces)
-
+            .sink { _ in
                 expectation.fulfill()
             }
             .store(in: &cancellableSet)
 
+        // When
         viewModel.fetchRacesPeriodically()
 
+        // Then
         XCTAssertEqual(viewModel.loadState, LoadState.loading)
         wait(for: [expectation], timeout: 1.5)
+        XCTAssertEqual(viewModel.loadState, .finish)
+        XCTAssertEqual(viewModel.filteredRacesInOrder, expectedRaces)
     }
 
-    func testFetchPeriodicallyShouldSetStateToNoInternetErrorWhenNoConnection() {
+    func testFetchPeriodically_whenNoConnection_shouldSetStateToNoInternetError() {
+        // Given
         let racingServiceStub = RacingServiceNoConnectionStub()
         let viewModel = RacingViewModel(racingService: racingServiceStub)
         let expectation = XCTestExpectation(description: "Set state to no internet error")
 
         viewModel.$loadState
             .drop { $0 == .idle || $0 == .loading }
-            .sink {
-                XCTAssertEqual($0, .error(true))
-                XCTAssertEqual(viewModel.filteredRacesInOrder.count, 0)
-
+            .sink { _ in
                 expectation.fulfill()
             }
             .store(in: &cancellableSet)
 
+        // When
         viewModel.fetchRacesPeriodically()
 
+        // Then
         wait(for: [expectation], timeout: 1.5)
+        XCTAssertEqual(viewModel.loadState, .error(true))
+        XCTAssertEqual(viewModel.filteredRacesInOrder.count, 0)
     }
 
-    func testFetchPeriodicallyShouldSetStateToErrorWhenRequestFailed() {
+    func testFetchPeriodically_whenRequestFailed_shouldSetStateToError() {
+        // Given
         let racingServiceStub = RacingServiceRequestFailedStub()
         let viewModel = RacingViewModel(racingService: racingServiceStub)
         let expectation = XCTestExpectation(description: "Set state to failed error")
 
         viewModel.$loadState
             .drop { $0 == .idle || $0 == .loading }
-            .sink {
-                XCTAssertEqual($0, .error(false))
-                XCTAssertEqual(viewModel.filteredRacesInOrder.count, 0)
-
+            .sink { _ in
                 expectation.fulfill()
             }
             .store(in: &cancellableSet)
 
+        // When
         viewModel.fetchRacesPeriodically()
 
+        // Then
         wait(for: [expectation], timeout: 1.5)
+        XCTAssertEqual(viewModel.loadState, .error(false))
+        XCTAssertEqual(viewModel.filteredRacesInOrder.count, 0)
     }
 
-    func testFilterByCategoryShouldNotReturnHorseRacesWhenHorseIsNotSelected() {
+    func testFilterByCategory_whenHorseIsNotSelected_shouldNotReturnHorseRaces() {
+        // Given
         let viewModel = RacingViewModel()
         viewModel.filteredRacesInOrder = [RacingServiceRequestSuccessfullyStub.raceOne, RacingServiceRequestSuccessfullyStub.raceTwo]
         let expectedRaces = [RacingServiceRequestSuccessfullyStub.raceTwo]
 
+        // When
         if let index = viewModel.categories.firstIndex(where: { $0.category == .horse }) {
             viewModel.categories[index].selected = false
         }
 
+        // Then
         XCTAssertEqual(viewModel.filteredRacesInOrder, expectedRaces)
     }
 }
