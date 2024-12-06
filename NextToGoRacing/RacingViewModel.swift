@@ -32,7 +32,7 @@ final class RacingViewModel: ObservableObject {
     private var cancellableSet: Set<AnyCancellable> = []
     private var allRaces = [RaceSummary]()
 
-    init(racingService: RacingService = RemoteRacingService()) {
+    init(racingService: RacingService = DependencyContainer.racingService) {
         self.racingService = racingService
 
         subscribeTimer()
