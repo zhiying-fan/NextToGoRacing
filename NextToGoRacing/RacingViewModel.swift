@@ -8,7 +8,7 @@
 import Combine
 import Foundation
 
-enum LoadState: Equatable {
+enum LoadState: Equatable, Codable {
     typealias NoInternet = Bool
 
     case idle

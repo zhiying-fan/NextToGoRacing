@@ -176,17 +176,7 @@ final class RacingServiceRequestSuccessfullyStub: RacingService {
 
 final class RacingServiceResponseSixRacesStub: RacingService {
     func fetchRaces() async throws -> RacesDTO {
-        let dummyRacesDTO = RacesDTO(
-            raceSummaries: [
-                "6cb1e96c-acf1-471f-b5bd-0947692b90cc": RacingServiceRequestSuccessfullyStub.raceTwo,
-                "e2e041dc-53f4-40c5-975d-4baf775e13a0": RacingServiceRequestSuccessfullyStub.raceOne,
-                "d2e041dc-53f4-40c5-975d-4baf775e13a0": RacingServiceRequestSuccessfullyStub.raceOne,
-                "a2e041dc-53f4-40c5-975d-4baf775e13a0": RacingServiceRequestSuccessfullyStub.raceOne,
-                "b2e041dc-53f4-40c5-975d-4baf775e13a0": RacingServiceRequestSuccessfullyStub.raceOne,
-                "f2e041dc-53f4-40c5-975d-4baf775e13a0": RacingServiceRequestSuccessfullyStub.raceOne,
-            ]
-        )
-        return dummyRacesDTO
+        return FakeRacingService.dummyRacesDTO
     }
 }
 

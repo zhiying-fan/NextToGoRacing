@@ -14,7 +14,6 @@ final class NextToGoRacingUITests: XCTestCase {
         super.setUp()
         continueAfterFailure = false
         app.launchArguments = ["UI-TESTING"]
-        app.launch()
     }
 
     override func tearDown() {
@@ -23,6 +22,12 @@ final class NextToGoRacingUITests: XCTestCase {
     }
 
     func testRacingView_whenUnselectedHorse_shouldRemoveAllHorseRaces() {
+        let finishState = LoadState.finish
+        if let data = try? JSONEncoder().encode(finishState) {
+            app.launchEnvironment["STATE"] = String(data: data, encoding: .utf8)
+        }
+        app.launch()
+
         // Check race info on racing list
         let listView = app.collectionViews
         let meetingName = listView.staticTexts["Parx Racing"]
@@ -52,4 +57,39 @@ final class NextToGoRacingUITests: XCTestCase {
         // Check horse races are removed
         XCTAssertFalse(meetingName.waitForExistence(timeout: 0.1), "Failed to filter out horse races")
     }
+
+    func testRacingView_whenNoInternet_shouldDisplayNoInternetErrorView() {
+        let finishState = LoadState.error(true)
+        if let data = try? JSONEncoder().encode(finishState) {
+            app.launchEnvironment["STATE"] = String(data: data, encoding: .utf8)
+        }
+        app.launch()
+
+        let title = app.staticTexts["Please check your network connection"]
+        let retryButton = app.buttons["Retry"]
+        XCTAssert(title.waitForExistence(timeout: 0.1), "Failed to find title on racing screen")
+        XCTAssert(retryButton.waitForExistence(timeout: 0.1), "Failed to find retry button on racing screen")
+    }
+
+    func testRacingView_whenGetInvalidResponse_shouldDisplayUnknownErrorView() {
+        let finishState = LoadState.error(false)
+        if let data = try? JSONEncoder().encode(finishState) {
+            app.launchEnvironment["STATE"] = String(data: data, encoding: .utf8)
+        }
+        app.launch()
+
+        let title = app.staticTexts["Something went wrong"]
+        let retryButton = app.buttons["Retry"]
+        XCTAssert(title.waitForExistence(timeout: 0.1), "Failed to find title on racing screen")
+        XCTAssert(retryButton.waitForExistence(timeout: 0.1), "Failed to find retry button on racing screen")
+    }
+}
+
+enum LoadState: Equatable, Codable {
+    typealias NoInternet = Bool
+
+    case idle
+    case loading
+    case finish
+    case error(NoInternet)
 }
