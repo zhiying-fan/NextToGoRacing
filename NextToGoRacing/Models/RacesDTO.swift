@@ -8,11 +8,9 @@
 import Foundation
 
 struct RacesDTO: Decodable {
-    let nextToGoIDS: [String]
     let raceSummaries: [String: RaceSummary]
 
     enum CodingKeys: String, CodingKey {
-        case nextToGoIDS = "next_to_go_ids"
         case raceSummaries = "race_summaries"
     }
 }

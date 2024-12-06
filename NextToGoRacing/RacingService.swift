@@ -36,7 +36,6 @@ final class FakeRacingService: RacingService {
     )
 
     static let dummyRacesDTO = RacesDTO(
-        nextToGoIDS: Array(repeating: "e2e041dc-53f4-40c5-975d-4baf775e13a0", count: 6),
         raceSummaries: [
             "6cb1e96c-acf1-471f-b5bd-0947692b90cc": dummyRace,
             "e2e041dc-53f4-40c5-975d-4baf775e13a0": dummyRace,
