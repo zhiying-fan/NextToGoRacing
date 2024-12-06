@@ -18,6 +18,7 @@ struct RacingRowView: View {
     var body: some View {
         HStack {
             Image(uiImage: raceSummary.category.icon)
+                .accessibilityLabel(raceSummary.category.label)
 
             VStack(alignment: .leading) {
                 Text(raceSummary.meetingName)
@@ -26,6 +27,7 @@ struct RacingRowView: View {
                 Text("Race \(raceSummary.raceNumber)")
                     .font(DesignKit.Font.subtitle)
             }
+            .accessibilityElement(children: .combine)
 
             Spacer()
 
@@ -44,6 +46,7 @@ struct RacingRowView: View {
                             .font(DesignKit.Font.title)
                             .foregroundStyle(DesignKit.Color.orange)
                     }
+                    .accessibilityElement(children: .combine)
                 }
             }
         }
