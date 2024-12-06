@@ -26,6 +26,17 @@ extension RaceCategory {
             DesignKit.Icon.harness
         }
     }
+
+    var label: String {
+        switch self {
+        case .horse:
+            "Horse"
+        case .greyhound:
+            "Greyhound"
+        case .harness:
+            "Harness"
+        }
+    }
 }
 
 struct CategorySelection {

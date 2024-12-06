@@ -28,22 +28,17 @@ final class RacingViewModel: ObservableObject {
     }
 
     private let racingService: RacingService
-    private let timerPublisher = Timer.publish(every: 60, on: .main, in: .common)
-    private var cancellableSet: Set<AnyCancellable> = []
+    private var cancellable: AnyCancellable?
     private var allRaces = [RaceSummary]()
 
     init(racingService: RacingService = DependencyContainer.racingService) {
         self.racingService = racingService
-
-        subscribeTimer()
     }
 
     func fetchRacesPeriodically() {
         loadState = .loading
 
-        timerPublisher
-            .connect()
-            .store(in: &cancellableSet)
+        subscribeTimer()
     }
 
     // MARK: Private Methods
@@ -69,12 +64,14 @@ final class RacingViewModel: ObservableObject {
     }
 
     private func subscribeTimer() {
-        timerPublisher
+        cancellable?.cancel()
+
+        cancellable = Timer.publish(every: 60, on: .main, in: .common)
+            .autoconnect()
             .prepend(Date())
             .sink { [weak self] _ in
                 self?.fetchRaces()
             }
-            .store(in: &cancellableSet)
     }
 
     private func transformToOrderedRaces(racesDTO: RacesDTO) -> [RaceSummary] {

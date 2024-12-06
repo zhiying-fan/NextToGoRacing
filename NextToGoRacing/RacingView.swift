@@ -59,10 +59,19 @@ struct RacingView: View {
 
     @ViewBuilder
     func raceListView() -> some View {
-        List(viewModel.filteredRacesInOrder, id: \.raceID) { race in
-            RacingRowView(raceSummary: race)
+        NavigationStack {
+            List(viewModel.filteredRacesInOrder, id: \.raceID) { race in
+                RacingRowView(raceSummary: race)
+            }
+            .listStyle(.plain)
+            .navigationTitle("Next To Go Racing")
+            .navigationBarTitleDisplayMode(.inline)
+            .toolbar {
+                ToolbarItem(placement: .topBarTrailing) {
+                    FilterView(categorySelections: $viewModel.categories)
+                }
+            }
         }
-        .listStyle(.plain)
     }
 }
 
