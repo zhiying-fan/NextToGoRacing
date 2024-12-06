@@ -18,6 +18,8 @@ struct RacingRowView: View {
     var body: some View {
         HStack {
             Image(uiImage: raceSummary.category.icon)
+                .renderingMode(.template)
+                .foregroundStyle(DesignKit.Color.icon)
                 .accessibilityLabel(raceSummary.category.label)
 
             VStack(alignment: .leading) {

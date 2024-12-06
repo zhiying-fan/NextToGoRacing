@@ -16,5 +16,6 @@ public extension DesignKit.Color {
     static let primaryBackground = Color(.systemBackground)
     static let primaryLabel = Color(.label)
     static let secondaryLabel = Color(.secondaryLabel)
+    static let icon = Color(.label)
     static let orange = Color.orange
 }
