@@ -22,8 +22,8 @@ final class NextToGoRacingUITests: XCTestCase {
     }
 
     func testRacingView_whenUnselectedHorse_shouldRemoveAllHorseRaces() {
-        let finishState = LoadState.finish
-        if let data = try? JSONEncoder().encode(finishState) {
+        let displayState = ViewState.display
+        if let data = try? JSONEncoder().encode(displayState) {
             app.launchEnvironment["STATE"] = String(data: data, encoding: .utf8)
         }
         app.launch()
@@ -58,9 +58,26 @@ final class NextToGoRacingUITests: XCTestCase {
         XCTAssertFalse(meetingName.waitForExistence(timeout: 0.1), "Failed to filter out horse races")
     }
 
+    func testRacingView_whenNoData_shouldDisplayEmptyView() {
+        let errorState = ViewState.empty
+        if let data = try? JSONEncoder().encode(errorState) {
+            app.launchEnvironment["STATE"] = String(data: data, encoding: .utf8)
+        }
+        app.launch()
+
+        let title = app.staticTexts["No Upcoming Races"]
+        let refreshButton = app.buttons["Refresh"]
+        XCTAssert(title.waitForExistence(timeout: 0.1), "Failed to find title on racing screen")
+        XCTAssert(refreshButton.waitForExistence(timeout: 0.1), "Failed to find refresh button on racing screen")
+
+        refreshButton.tap()
+
+        XCTAssert(title.waitForExistence(timeout: 0.1), "Failed to find title on racing screen")
+    }
+
     func testRacingView_whenNoInternet_shouldDisplayNoInternetErrorView() {
-        let finishState = LoadState.error(true)
-        if let data = try? JSONEncoder().encode(finishState) {
+        let errorState = ViewState.error(true)
+        if let data = try? JSONEncoder().encode(errorState) {
             app.launchEnvironment["STATE"] = String(data: data, encoding: .utf8)
         }
         app.launch()
@@ -69,11 +86,15 @@ final class NextToGoRacingUITests: XCTestCase {
         let retryButton = app.buttons["Retry"]
         XCTAssert(title.waitForExistence(timeout: 0.1), "Failed to find title on racing screen")
         XCTAssert(retryButton.waitForExistence(timeout: 0.1), "Failed to find retry button on racing screen")
+
+        retryButton.tap()
+
+        XCTAssert(title.waitForExistence(timeout: 0.1), "Failed to find title on racing screen")
     }
 
     func testRacingView_whenGetInvalidResponse_shouldDisplayUnknownErrorView() {
-        let finishState = LoadState.error(false)
-        if let data = try? JSONEncoder().encode(finishState) {
+        let errorState = ViewState.error(false)
+        if let data = try? JSONEncoder().encode(errorState) {
             app.launchEnvironment["STATE"] = String(data: data, encoding: .utf8)
         }
         app.launch()
@@ -82,14 +103,18 @@ final class NextToGoRacingUITests: XCTestCase {
         let retryButton = app.buttons["Retry"]
         XCTAssert(title.waitForExistence(timeout: 0.1), "Failed to find title on racing screen")
         XCTAssert(retryButton.waitForExistence(timeout: 0.1), "Failed to find retry button on racing screen")
+
+        retryButton.tap()
+
+        XCTAssert(title.waitForExistence(timeout: 0.1), "Failed to find title on racing screen")
     }
 }
 
-enum LoadState: Equatable, Codable {
+enum ViewState: Equatable, Codable {
     typealias NoInternet = Bool
 
-    case idle
     case loading
-    case finish
+    case empty
+    case display
     case error(NoInternet)
 }

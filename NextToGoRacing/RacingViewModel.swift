@@ -8,22 +8,21 @@
 import Combine
 import Foundation
 
-enum LoadState: Equatable, Codable {
+enum ViewState: Equatable, Codable {
     typealias NoInternet = Bool
 
-    case idle
     case loading
-    case finish
+    case empty
+    case display
     case error(NoInternet)
 }
 
 final class RacingViewModel: ObservableObject {
-    @Published var loadState = LoadState.idle
+    @Published var viewState = ViewState.loading
     @Published var filteredRacesInOrder = [RaceSummary]()
     @Published var categories = RaceCategory.allCases.map { CategorySelection(category: $0, selected: true) } {
         didSet {
-            filterRaces()
-            takeTheFirstFiveRaces()
+            updateFilteredRacesInOrder()
         }
     }
 
@@ -36,7 +35,7 @@ final class RacingViewModel: ObservableObject {
     }
 
     func fetchRacesPeriodically() {
-        loadState = .loading
+        viewState = .loading
 
         subscribeTimer()
     }
@@ -49,15 +48,12 @@ final class RacingViewModel: ObservableObject {
                 let racesDTO = try await racingService.fetchRaces()
                 allRaces = transformToOrderedRaces(racesDTO: racesDTO)
 
-                filterRaces()
-                takeTheFirstFiveRaces()
-
-                loadState = .finish
+                updateFilteredRacesInOrder()
             } catch {
                 if let requestError = error as? RequestError, requestError == .noInternet {
-                    loadState = .error(true)
+                    viewState = .error(true)
                 } else {
-                    loadState = .error(false)
+                    viewState = .error(false)
                 }
             }
         }
@@ -76,6 +72,17 @@ final class RacingViewModel: ObservableObject {
 
     private func transformToOrderedRaces(racesDTO: RacesDTO) -> [RaceSummary] {
         racesDTO.raceSummaries.values.sorted { $0.advertisedStart.seconds < $1.advertisedStart.seconds }
+    }
+
+    private func updateFilteredRacesInOrder() {
+        filterRaces()
+
+        if filteredRacesInOrder.isEmpty {
+            viewState = .empty
+        } else {
+            takeTheFirstFiveRaces()
+            viewState = .display
+        }
     }
 
     private func filterRaces() {

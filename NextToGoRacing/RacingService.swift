@@ -71,12 +71,12 @@ final class RemoteRacingService: RacingService {
         func fetchRaces() async throws -> RacesDTO {
             if let stateString = ProcessInfo.processInfo.environment["STATE"],
                let stateData = stateString.data(using: .utf8),
-               let state = try? JSONDecoder().decode(LoadState.self, from: stateData)
+               let state = try? JSONDecoder().decode(ViewState.self, from: stateData)
             {
                 switch state {
-                case .idle, .loading:
+                case .empty, .loading:
                     return RacesDTO(raceSummaries: [:])
-                case .finish:
+                case .display:
                     return FakeRacingService.dummyRacesDTO
                 case let .error(noInternet):
                     if noInternet {

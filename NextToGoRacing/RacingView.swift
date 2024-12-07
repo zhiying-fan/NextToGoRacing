@@ -12,16 +12,25 @@ struct RacingView: View {
     @StateObject private var viewModel = RacingViewModel()
 
     var body: some View {
-        Group {
-            switch viewModel.loadState {
-            case .idle:
-                emptyView()
-            case .loading:
-                ProgressView()
-            case let .error(noInternet):
-                errorView(noInternet: noInternet)
-            case .finish:
-                raceListView()
+        NavigationStack {
+            Group {
+                switch viewModel.viewState {
+                case .empty:
+                    emptyView()
+                case .loading:
+                    ProgressView()
+                case let .error(noInternet):
+                    errorView(noInternet: noInternet)
+                case .display:
+                    raceListView()
+                }
+            }
+            .navigationTitle("Next To Go Racing")
+            .navigationBarTitleDisplayMode(.inline)
+            .toolbar {
+                ToolbarItem(placement: .topBarTrailing) {
+                    FilterView(categorySelections: $viewModel.categories)
+                }
             }
         }
         .onAppear {
@@ -59,19 +68,10 @@ struct RacingView: View {
 
     @ViewBuilder
     func raceListView() -> some View {
-        NavigationStack {
-            List(viewModel.filteredRacesInOrder, id: \.raceID) { race in
-                RacingRowView(raceSummary: race)
-            }
-            .listStyle(.plain)
-            .navigationTitle("Next To Go Racing")
-            .navigationBarTitleDisplayMode(.inline)
-            .toolbar {
-                ToolbarItem(placement: .topBarTrailing) {
-                    FilterView(categorySelections: $viewModel.categories)
-                }
-            }
+        List(viewModel.filteredRacesInOrder, id: \.raceID) { race in
+            RacingRowView(raceSummary: race)
         }
+        .listStyle(.plain)
     }
 }
 

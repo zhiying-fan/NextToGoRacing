@@ -27,7 +27,7 @@ final class RacingViewModelTests: XCTestCase {
         let viewModel = RacingViewModel(racingService: racingServiceStub)
 
         // Then
-        XCTAssertEqual(viewModel.loadState, LoadState.idle)
+        XCTAssertEqual(viewModel.viewState, ViewState.loading)
         XCTAssertEqual(viewModel.filteredRacesInOrder.count, 0)
     }
 
@@ -36,10 +36,10 @@ final class RacingViewModelTests: XCTestCase {
         let racingServiceStub = RacingServiceResponseThreeRacesStub()
         let viewModel = RacingViewModel(racingService: racingServiceStub)
         let expectedRaces = [FakeRacingService.ongoingHorseRace, FakeRacingService.greyhoundRace]
-        let expectation = XCTestExpectation(description: "Set state to finish")
+        let expectation = XCTestExpectation(description: "Set state to display")
 
-        viewModel.$loadState
-            .drop { $0 == .idle || $0 == .loading }
+        viewModel.$viewState
+            .drop { $0 == .loading }
             .sink { _ in
                 expectation.fulfill()
             }
@@ -49,9 +49,9 @@ final class RacingViewModelTests: XCTestCase {
         viewModel.fetchRacesPeriodically()
 
         // Then
-        XCTAssertEqual(viewModel.loadState, LoadState.loading)
+        XCTAssertEqual(viewModel.viewState, ViewState.loading)
         wait(for: [expectation], timeout: 1.5)
-        XCTAssertEqual(viewModel.loadState, .finish)
+        XCTAssertEqual(viewModel.viewState, .display)
         XCTAssertEqual(viewModel.filteredRacesInOrder, expectedRaces)
     }
 
@@ -61,8 +61,8 @@ final class RacingViewModelTests: XCTestCase {
         let viewModel = RacingViewModel(racingService: racingServiceStub)
         let expectation = XCTestExpectation(description: "Set state to no internet error")
 
-        viewModel.$loadState
-            .drop { $0 == .idle || $0 == .loading }
+        viewModel.$viewState
+            .drop { $0 == .loading }
             .sink { _ in
                 expectation.fulfill()
             }
@@ -73,7 +73,7 @@ final class RacingViewModelTests: XCTestCase {
 
         // Then
         wait(for: [expectation], timeout: 1.5)
-        XCTAssertEqual(viewModel.loadState, .error(true))
+        XCTAssertEqual(viewModel.viewState, .error(true))
         XCTAssertEqual(viewModel.filteredRacesInOrder.count, 0)
     }
 
@@ -83,8 +83,8 @@ final class RacingViewModelTests: XCTestCase {
         let viewModel = RacingViewModel(racingService: racingServiceStub)
         let expectation = XCTestExpectation(description: "Set state to failed error")
 
-        viewModel.$loadState
-            .drop { $0 == .idle || $0 == .loading }
+        viewModel.$viewState
+            .drop { $0 == .loading }
             .sink { _ in
                 expectation.fulfill()
             }
@@ -95,7 +95,7 @@ final class RacingViewModelTests: XCTestCase {
 
         // Then
         wait(for: [expectation], timeout: 1.5)
-        XCTAssertEqual(viewModel.loadState, .error(false))
+        XCTAssertEqual(viewModel.viewState, .error(false))
         XCTAssertEqual(viewModel.filteredRacesInOrder.count, 0)
     }
 
@@ -106,8 +106,8 @@ final class RacingViewModelTests: XCTestCase {
         let expectedRaces = [FakeRacingService.greyhoundRace]
         let expectation = XCTestExpectation(description: "Set state to finish")
 
-        viewModel.$loadState
-            .drop { $0 == .idle || $0 == .loading }
+        viewModel.$viewState
+            .drop { $0 == .loading }
             .sink { _ in
                 expectation.fulfill()
             }
@@ -131,8 +131,8 @@ final class RacingViewModelTests: XCTestCase {
         let viewModel = RacingViewModel(racingService: racingServiceStub)
         let expectation = XCTestExpectation(description: "Set state to finish")
 
-        viewModel.$loadState
-            .drop { $0 == .idle || $0 == .loading }
+        viewModel.$viewState
+            .drop { $0 == .loading }
             .sink { _ in
                 expectation.fulfill()
             }
@@ -144,6 +144,29 @@ final class RacingViewModelTests: XCTestCase {
         // Then
         wait(for: [expectation], timeout: 1.5)
         XCTAssertEqual(viewModel.filteredRacesInOrder.count, 5)
+    }
+
+    func testFetchPeriodically_whenThereIsNoRace_shouldSetStateToEmpty() {
+        // Given
+        let racingServiceStub = RacingServiceResponseZeroRacesStub()
+        let viewModel = RacingViewModel(racingService: racingServiceStub)
+        let expectation = XCTestExpectation(description: "Request done")
+
+        viewModel.$viewState
+            .drop { $0 == .loading }
+            .sink { _ in
+                expectation.fulfill()
+            }
+            .store(in: &cancellableSet)
+
+        // When
+        viewModel.fetchRacesPeriodically()
+
+        // Then
+        XCTAssertEqual(viewModel.viewState, ViewState.loading)
+        wait(for: [expectation], timeout: 1.5)
+        XCTAssertEqual(viewModel.viewState, .empty)
+        XCTAssertEqual(viewModel.filteredRacesInOrder.count, 0)
     }
 }
 
@@ -163,6 +186,12 @@ final class RacingServiceResponseThreeRacesStub: RacingService {
 final class RacingServiceResponseSixRacesStub: RacingService {
     func fetchRaces() async throws -> RacesDTO {
         FakeRacingService.dummyRacesDTO
+    }
+}
+
+final class RacingServiceResponseZeroRacesStub: RacingService {
+    func fetchRaces() async throws -> RacesDTO {
+        RacesDTO(raceSummaries: [:])
     }
 }
 
