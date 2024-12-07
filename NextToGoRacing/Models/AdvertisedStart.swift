@@ -8,5 +8,5 @@
 import Foundation
 
 struct AdvertisedStart: Decodable, Equatable {
-    let seconds: Int
+    let seconds: TimeInterval
 }

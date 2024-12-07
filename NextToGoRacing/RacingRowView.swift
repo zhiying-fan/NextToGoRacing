@@ -12,7 +12,7 @@ struct RacingRowView: View {
     let raceSummary: RaceSummary
 
     var startTime: Date {
-        Date(timeIntervalSince1970: TimeInterval(raceSummary.advertisedStart.seconds))
+        Date(timeIntervalSince1970: raceSummary.advertisedStart.seconds)
     }
 
     var body: some View {

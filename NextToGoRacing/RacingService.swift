@@ -28,22 +28,43 @@ final class RemoteRacingService: RacingService {
 
 #if DEBUG
     final class FakeRacingService: RacingService {
-        static let dummyRace = RaceSummary(
+        static let ongoingHorseRace = RaceSummary(
             raceID: "e2e041dc-53f4-40c5-975d-4baf775e13a0",
             raceNumber: 6,
             meetingName: "Parx Racing",
             category: .horse,
-            advertisedStart: AdvertisedStart(seconds: 1_733_253_900)
+            advertisedStart: AdvertisedStart(seconds: Date().timeIntervalSince1970 - 10)
+        )
+        static let greyhoundRace = RaceSummary(
+            raceID: "6cb1e96c-acf1-471f-b5bd-0947692b90cc",
+            raceNumber: 5,
+            meetingName: "Swindon Bags",
+            category: .greyhound,
+            advertisedStart: AdvertisedStart(seconds: Date().timeIntervalSince1970 + 120)
+        )
+        static let harnessRace = RaceSummary(
+            raceID: "e2e041dc-53f4-40c5-975d-4baf775e13a0",
+            raceNumber: 3,
+            meetingName: "Swindon Bags",
+            category: .harness,
+            advertisedStart: AdvertisedStart(seconds: Date().timeIntervalSince1970 + 60)
+        )
+        static let pastHarnessRace = RaceSummary(
+            raceID: "32e041dc-53f4-40c5-975d-4baf775e13a0",
+            raceNumber: 4,
+            meetingName: "Club Hipico Concepcion",
+            category: .harness,
+            advertisedStart: AdvertisedStart(seconds: Date().timeIntervalSince1970 - 120)
         )
 
         static let dummyRacesDTO = RacesDTO(
             raceSummaries: [
-                "6cb1e96c-acf1-471f-b5bd-0947692b90cc": dummyRace,
-                "e2e041dc-53f4-40c5-975d-4baf775e13a0": dummyRace,
-                "d2e041dc-53f4-40c5-975d-4baf775e13a0": dummyRace,
-                "a2e041dc-53f4-40c5-975d-4baf775e13a0": dummyRace,
-                "b2e041dc-53f4-40c5-975d-4baf775e13a0": dummyRace,
-                "f2e041dc-53f4-40c5-975d-4baf775e13a0": dummyRace,
+                "6cb1e96c-acf1-471f-b5bd-0947692b90cc": ongoingHorseRace,
+                "e2e041dc-53f4-40c5-975d-4baf775e13a0": harnessRace,
+                "d2e041dc-53f4-40c5-975d-4baf775e13a0": greyhoundRace,
+                "a2e041dc-53f4-40c5-975d-4baf775e13a0": ongoingHorseRace,
+                "b2e041dc-53f4-40c5-975d-4baf775e13a0": ongoingHorseRace,
+                "f2e041dc-53f4-40c5-975d-4baf775e13a0": ongoingHorseRace,
             ]
         )
 

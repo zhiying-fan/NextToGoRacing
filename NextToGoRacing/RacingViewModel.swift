@@ -84,7 +84,14 @@ final class RacingViewModel: ObservableObject {
             .map(\.category)
 
         filteredRacesInOrder = allRaces
+            .filter { isRaceAfterLastMinute(race: $0) }
             .filter { selectedCategories.contains($0.category) }
+    }
+
+    private func isRaceAfterLastMinute(race: RaceSummary) -> Bool {
+        let currentTimestamp = Date().timeIntervalSince1970
+        let oneMinuteAgoTimestamp = currentTimestamp - 60
+        return race.advertisedStart.seconds > oneMinuteAgoTimestamp
     }
 
     private func takeTheFirstFiveRaces() {

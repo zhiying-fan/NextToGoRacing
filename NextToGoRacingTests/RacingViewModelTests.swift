@@ -21,7 +21,7 @@ final class RacingViewModelTests: XCTestCase {
 
     func testViewModel_whenInit_shouldHaveIdleStateAndEmptyRaces() {
         // Given
-        let racingServiceStub = RacingServiceRequestSuccessfullyStub()
+        let racingServiceStub = RacingServiceResponseThreeRacesStub()
 
         // When
         let viewModel = RacingViewModel(racingService: racingServiceStub)
@@ -31,11 +31,11 @@ final class RacingViewModelTests: XCTestCase {
         XCTAssertEqual(viewModel.filteredRacesInOrder.count, 0)
     }
 
-    func testFetchPeriodically_whenRequestSuccessfully_shouldSetStateAndRaces() {
+    func testFetchPeriodically_whenRequestSuccessfully_shouldSetStateAndFilterRaces() {
         // Given
-        let racingServiceStub = RacingServiceRequestSuccessfullyStub()
+        let racingServiceStub = RacingServiceResponseThreeRacesStub()
         let viewModel = RacingViewModel(racingService: racingServiceStub)
-        let expectedRaces = [RacingServiceRequestSuccessfullyStub.raceOne, RacingServiceRequestSuccessfullyStub.raceTwo]
+        let expectedRaces = [FakeRacingService.ongoingHorseRace, FakeRacingService.greyhoundRace]
         let expectation = XCTestExpectation(description: "Set state to finish")
 
         viewModel.$loadState
@@ -101,9 +101,9 @@ final class RacingViewModelTests: XCTestCase {
 
     func testFilterByCategory_whenHorseIsNotSelected_shouldNotReturnHorseRaces() {
         // Given
-        let racingServiceStub = RacingServiceRequestSuccessfullyStub()
+        let racingServiceStub = RacingServiceResponseThreeRacesStub()
         let viewModel = RacingViewModel(racingService: racingServiceStub)
-        let expectedRaces = [RacingServiceRequestSuccessfullyStub.raceTwo]
+        let expectedRaces = [FakeRacingService.greyhoundRace]
         let expectation = XCTestExpectation(description: "Set state to finish")
 
         viewModel.$loadState
@@ -147,27 +147,13 @@ final class RacingViewModelTests: XCTestCase {
     }
 }
 
-final class RacingServiceRequestSuccessfullyStub: RacingService {
-    static let raceTwo = RaceSummary(
-        raceID: "6cb1e96c-acf1-471f-b5bd-0947692b90cc",
-        raceNumber: 5,
-        meetingName: "Swindon Bags",
-        category: .greyhound,
-        advertisedStart: AdvertisedStart(seconds: 1_733_253_960)
-    )
-    static let raceOne = RaceSummary(
-        raceID: "e2e041dc-53f4-40c5-975d-4baf775e13a0",
-        raceNumber: 6,
-        meetingName: "Parx Racing",
-        category: .horse,
-        advertisedStart: AdvertisedStart(seconds: 1_733_253_900)
-    )
-
+final class RacingServiceResponseThreeRacesStub: RacingService {
     func fetchRaces() async throws -> RacesDTO {
         let dummyRacesDTO = RacesDTO(
             raceSummaries: [
-                "6cb1e96c-acf1-471f-b5bd-0947692b90cc": RacingServiceRequestSuccessfullyStub.raceTwo,
-                "e2e041dc-53f4-40c5-975d-4baf775e13a0": RacingServiceRequestSuccessfullyStub.raceOne,
+                "6cb1e96c-acf1-471f-b5bd-0947692b90cc": FakeRacingService.greyhoundRace,
+                "e2e041dc-53f4-40c5-975d-4baf775e13a0": FakeRacingService.ongoingHorseRace,
+                "32e041dc-53f4-40c5-975d-4baf775e13a0": FakeRacingService.pastHarnessRace,
             ]
         )
         return dummyRacesDTO
@@ -176,7 +162,7 @@ final class RacingServiceRequestSuccessfullyStub: RacingService {
 
 final class RacingServiceResponseSixRacesStub: RacingService {
     func fetchRaces() async throws -> RacesDTO {
-        return FakeRacingService.dummyRacesDTO
+        FakeRacingService.dummyRacesDTO
     }
 }
 
