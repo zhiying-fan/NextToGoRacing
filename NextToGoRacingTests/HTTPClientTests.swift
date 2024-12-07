@@ -43,9 +43,26 @@ final class HTTPClientTests: XCTestCase {
         XCTAssertEqual(thrownError as? RequestError, RequestError.noInternet)
     }
 
+    func testGetRequest_whenAPIReturnNonHTTPURLResponse_shouldThrowInvalidResponse() async {
+        // Given
+        let httpAPIStub = HTTPAPINonHTTPURLResponseStub()
+        let httpClient = DefaultHTTPClient(httpAPI: httpAPIStub)
+        var thrownError: Error?
+
+        // When
+        do {
+            _ = try await httpClient.getRequest(url: "https://abc.com")
+        } catch {
+            thrownError = error
+        }
+
+        // Then
+        XCTAssertEqual(thrownError as? RequestError, RequestError.invalidResponse)
+    }
+
     func testGetRequest_whenAPIReturn401_shouldThrowInvalidResponse() async {
         // Given
-        let httpAPIStub = HTTPAPIInvalidResponseStub()
+        let httpAPIStub = HTTPAPIInvalidCodeStub()
         let httpClient = DefaultHTTPClient(httpAPI: httpAPIStub)
         var thrownError: Error?
 
@@ -86,7 +103,14 @@ final class HTTPAPINoInternetStub: HTTPAPI {
     }
 }
 
-final class HTTPAPIInvalidResponseStub: HTTPAPI {
+final class HTTPAPINonHTTPURLResponseStub: HTTPAPI {
+    func data(from _: URL) async throws -> (Data, URLResponse) {
+        let response = URLResponse(url: URL(string: "https://abc.com")!, mimeType: nil, expectedContentLength: 0, textEncodingName: nil)
+        return (Data(), response)
+    }
+}
+
+final class HTTPAPIInvalidCodeStub: HTTPAPI {
     func data(from _: URL) async throws -> (Data, URLResponse) {
         let response = HTTPURLResponse(url: URL(string: "https://abc.com")!, statusCode: 401, httpVersion: nil, headerFields: nil)!
         return (Data(), response)
