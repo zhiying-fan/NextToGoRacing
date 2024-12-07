@@ -11,8 +11,7 @@ import XCTest
 final class HTTPClientTests: XCTestCase {
     func testGetRequest_whenPassEmptyURL_shouldThrowInvalidURL() async {
         // Given
-        let httpAPIStub = HTTPAPIRequestSuccessfullyStub()
-        let httpClient = DefaultHTTPClient(httpAPI: httpAPIStub)
+        let httpClient = DefaultHTTPClient()
         var thrownError: Error?
 
         // When

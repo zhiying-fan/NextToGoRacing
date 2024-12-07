@@ -11,6 +11,10 @@ import SwiftUI
 struct RacingView: View {
     @StateObject private var viewModel = RacingViewModel()
 
+    private var shouldShowFilterButton: Bool {
+        viewModel.viewState == .empty || viewModel.viewState == .display
+    }
+
     var body: some View {
         NavigationStack {
             Group {
@@ -19,6 +23,7 @@ struct RacingView: View {
                     emptyView()
                 case .loading:
                     ProgressView()
+                        .accessibilityLabel("Loading")
                 case let .error(noInternet):
                     errorView(noInternet: noInternet)
                 case .display:
@@ -30,6 +35,7 @@ struct RacingView: View {
             .toolbar {
                 ToolbarItem(placement: .topBarTrailing) {
                     FilterView(categorySelections: $viewModel.categories)
+                        .opacity(shouldShowFilterButton ? 1 : 0)
                 }
             }
         }

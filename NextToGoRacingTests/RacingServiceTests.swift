@@ -102,6 +102,6 @@ final class HTTPClientReturnWrongDataStub: HTTPClient {
 
 final class HTTPClientGetFailedStub: HTTPClient {
     func getRequest(url _: String) async throws -> Data {
-        throw RequestError.invalidURL
+        throw RequestError.invalidResponse
     }
 }

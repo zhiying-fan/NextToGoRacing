@@ -59,8 +59,8 @@ final class NextToGoRacingUITests: XCTestCase {
     }
 
     func testRacingView_whenNoData_shouldDisplayEmptyView() {
-        let errorState = ViewState.empty
-        if let data = try? JSONEncoder().encode(errorState) {
+        let emptyState = ViewState.empty
+        if let data = try? JSONEncoder().encode(emptyState) {
             app.launchEnvironment["STATE"] = String(data: data, encoding: .utf8)
         }
         app.launch()

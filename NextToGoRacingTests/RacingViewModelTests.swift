@@ -20,11 +20,8 @@ final class RacingViewModelTests: XCTestCase {
     }
 
     func testViewModel_whenInit_shouldHaveIdleStateAndEmptyRaces() {
-        // Given
-        let racingServiceStub = RacingServiceResponseThreeRacesStub()
-
         // When
-        let viewModel = RacingViewModel(racingService: racingServiceStub)
+        let viewModel = RacingViewModel()
 
         // Then
         XCTAssertEqual(viewModel.viewState, ViewState.loading)
@@ -36,7 +33,7 @@ final class RacingViewModelTests: XCTestCase {
         let racingServiceStub = RacingServiceResponseThreeRacesStub()
         let viewModel = RacingViewModel(racingService: racingServiceStub)
         let expectedRaces = [FakeRacingService.ongoingHorseRace, FakeRacingService.greyhoundRace]
-        let expectation = XCTestExpectation(description: "Set state to display")
+        let expectation = XCTestExpectation(description: "Request done")
 
         viewModel.$viewState
             .drop { $0 == .loading }
@@ -50,7 +47,7 @@ final class RacingViewModelTests: XCTestCase {
 
         // Then
         XCTAssertEqual(viewModel.viewState, ViewState.loading)
-        wait(for: [expectation], timeout: 1.5)
+        wait(for: [expectation], timeout: 1)
         XCTAssertEqual(viewModel.viewState, .display)
         XCTAssertEqual(viewModel.filteredRacesInOrder, expectedRaces)
     }
@@ -59,7 +56,7 @@ final class RacingViewModelTests: XCTestCase {
         // Given
         let racingServiceStub = RacingServiceNoConnectionStub()
         let viewModel = RacingViewModel(racingService: racingServiceStub)
-        let expectation = XCTestExpectation(description: "Set state to no internet error")
+        let expectation = XCTestExpectation(description: "Request done")
 
         viewModel.$viewState
             .drop { $0 == .loading }
@@ -72,7 +69,7 @@ final class RacingViewModelTests: XCTestCase {
         viewModel.fetchRacesPeriodically()
 
         // Then
-        wait(for: [expectation], timeout: 1.5)
+        wait(for: [expectation], timeout: 1)
         XCTAssertEqual(viewModel.viewState, .error(true))
         XCTAssertEqual(viewModel.filteredRacesInOrder.count, 0)
     }
@@ -81,7 +78,7 @@ final class RacingViewModelTests: XCTestCase {
         // Given
         let racingServiceStub = RacingServiceRequestFailedStub()
         let viewModel = RacingViewModel(racingService: racingServiceStub)
-        let expectation = XCTestExpectation(description: "Set state to failed error")
+        let expectation = XCTestExpectation(description: "Request done")
 
         viewModel.$viewState
             .drop { $0 == .loading }
@@ -94,7 +91,7 @@ final class RacingViewModelTests: XCTestCase {
         viewModel.fetchRacesPeriodically()
 
         // Then
-        wait(for: [expectation], timeout: 1.5)
+        wait(for: [expectation], timeout: 1)
         XCTAssertEqual(viewModel.viewState, .error(false))
         XCTAssertEqual(viewModel.filteredRacesInOrder.count, 0)
     }
@@ -104,7 +101,7 @@ final class RacingViewModelTests: XCTestCase {
         let racingServiceStub = RacingServiceResponseThreeRacesStub()
         let viewModel = RacingViewModel(racingService: racingServiceStub)
         let expectedRaces = [FakeRacingService.greyhoundRace]
-        let expectation = XCTestExpectation(description: "Set state to finish")
+        let expectation = XCTestExpectation(description: "Request done")
 
         viewModel.$viewState
             .drop { $0 == .loading }
@@ -114,7 +111,7 @@ final class RacingViewModelTests: XCTestCase {
             .store(in: &cancellableSet)
 
         viewModel.fetchRacesPeriodically()
-        wait(for: [expectation], timeout: 1.5)
+        wait(for: [expectation], timeout: 1)
 
         // When
         if let index = viewModel.categories.firstIndex(where: { $0.category == .horse }) {
@@ -123,13 +120,14 @@ final class RacingViewModelTests: XCTestCase {
 
         // Then
         XCTAssertEqual(viewModel.filteredRacesInOrder, expectedRaces)
+        XCTAssertEqual(viewModel.viewState, .display)
     }
 
     func testTakeTheFirstFive_whenThereAreMoreThanFiveRaces_shouldOnlyTakeTheFirstFive() {
         // Given
         let racingServiceStub = RacingServiceResponseSixRacesStub()
         let viewModel = RacingViewModel(racingService: racingServiceStub)
-        let expectation = XCTestExpectation(description: "Set state to finish")
+        let expectation = XCTestExpectation(description: "Request done")
 
         viewModel.$viewState
             .drop { $0 == .loading }
@@ -142,8 +140,9 @@ final class RacingViewModelTests: XCTestCase {
         viewModel.fetchRacesPeriodically()
 
         // Then
-        wait(for: [expectation], timeout: 1.5)
+        wait(for: [expectation], timeout: 1)
         XCTAssertEqual(viewModel.filteredRacesInOrder.count, 5)
+        XCTAssertEqual(viewModel.viewState, .display)
     }
 
     func testFetchPeriodically_whenThereIsNoRace_shouldSetStateToEmpty() {
@@ -164,7 +163,7 @@ final class RacingViewModelTests: XCTestCase {
 
         // Then
         XCTAssertEqual(viewModel.viewState, ViewState.loading)
-        wait(for: [expectation], timeout: 1.5)
+        wait(for: [expectation], timeout: 1)
         XCTAssertEqual(viewModel.viewState, .empty)
         XCTAssertEqual(viewModel.filteredRacesInOrder.count, 0)
     }
