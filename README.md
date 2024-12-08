@@ -19,11 +19,12 @@ A SwiftUI list of upcoming races fetched from Neds
 
 | Racing List | Filter | No internet |
 | - | - | - |
-| - | - | - |
+| ![IMG_8072](https://github.com/user-attachments/assets/3f87c3e8-16ee-44e7-8a2a-2e58ce2a6d25) | ![IMG_8073](https://github.com/user-attachments/assets/9a3fa795-a5de-4760-b0d4-f117bae7027e) | ![IMG_8074](https://github.com/user-attachments/assets/cba10493-4ae3-4b8b-b433-2ac31af19c4b) |
 
 ## Installation
 
 ### Prerequisites
+
 - macOS 12 or later
 - Xcode 15 or later
 - iOS 17+ simulator or device
