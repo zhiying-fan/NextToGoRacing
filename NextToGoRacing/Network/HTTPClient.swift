@@ -19,7 +19,11 @@ final class DefaultHTTPClient: HTTPClient {
     }
 
     func getRequest(url: String) async throws -> Data {
-        guard let requestURL = URL(string: url) else { throw RequestError.invalidURL }
+        guard
+            let requestURL = URL(string: url)
+        else {
+            throw RequestError.invalidURL
+        }
 
         do {
             let (data, response) = try await httpAPI.data(from: requestURL)
